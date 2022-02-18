@@ -1,17 +1,11 @@
-/**
- * Required External Modules
- */
-
 import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 
-dotenv.config();
+const readlineSync = require('readline-sync');
 
-/**
- * App Variables
- */
+dotenv.config();
 
 if (!process.env.PORT) {
 	process.exit(1);
@@ -21,21 +15,30 @@ const PORT: number = parseInt(process.env.PORT as string, 10);
 
 const app = express();
 
-/**
- *  App Configuration
- */
-
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-/**
- * Server Activation
- */
 
 app.listen(PORT, () => {
 	console.log(`Listening on port ${PORT}`);
 
-  // Escreva aqui a sua msg para o mundo
-  
+	const quantidaDeAlunos = readlineSync.question(' Quantos alunos tem? ');
+	let maiorNota = 0;
+	let alunoComMaiorNota = 'Jose'; 
+
+	for (let i = 0; i < quantidaDeAlunos; i++) {
+		const nomeDoAluno = readlineSync.question(' Qual o nome do aluno? ');
+		const notaDoAluno = readlineSync.question(' Qual a nota do aluno? ');
+
+		if (notaDoAluno > maiorNota) {
+			maiorNota = notaDoAluno
+			alunoComMaiorNota = nomeDoAluno;
+		}
+
+	}
+	console.log("O aluno com maior nota é: " + alunoComMaiorNota);
+	console.log("Nota do " + alunoComMaiorNota + "; " + maiorNota);	
+
 });
+
